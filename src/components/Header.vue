@@ -56,7 +56,6 @@ $background: #444;
     .container {
       width: 100%;
       min-width: 960px;
-      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;

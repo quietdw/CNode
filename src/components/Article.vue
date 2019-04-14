@@ -32,7 +32,9 @@
           <div class="comment-container">
             <div class="comment-info">
               <span>
-                <a href>{{reply.author.loginname}}</a>
+                <router-link
+                  :to="{name:'user',params:{loginname:reply.author.loginname}}"
+                >{{reply.author.loginname}}</router-link>
               </span>
               <a>{{index+1}}楼·{{friendlyDate(reply.create_at)}}</a>
             </div>
@@ -151,6 +153,9 @@ export default {
         display: flex;
         border-top: 1px solid #f0f0f0;
         padding: 10px;
+        &:last-child {
+          border-radius: 0 0 5px 5px;
+        }
         .avatar {
           img {
             width: 30px;
