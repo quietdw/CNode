@@ -3,19 +3,34 @@ import Router from 'vue-router'
 
 import PostList from "../components/PostList";
 import Article from "../components/Article";
+import Slidebar from "../components/Slidebar";
+import UserInfo from "../components/UserInfo";
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
-      name: 'article',
-      path: '/article/:id',
-      component: Article
+      name: 'topic',
+      path: '/topic/:id',
+      components: {
+        main: Article,
+        slidebar: Slidebar
+      }
     },
     {
       name: 'index',
       path: '/',
-      component: PostList
+      components: {
+        main: PostList
+      }
+    },
+    {
+      name: 'user',
+      path: '/user/:loginname',
+      components: {
+        main: UserInfo,
+        slidebar: Slidebar
+      }
     }
   ]
 })
