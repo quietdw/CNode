@@ -2,9 +2,11 @@
   <div class="header">
     <div class="inner-container">
       <div class="container">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#n-cnode"></use>
-        </svg>
+        <router-link to="/">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#n-cnode"></use>
+          </svg>
+        </router-link>
         <ul>
           <li>
             <a href="#">首页</a>
@@ -58,7 +60,7 @@ $background: #444;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
-      > svg {
+      svg {
         width: 9.230769em;
         height: 2.153846em;
       }
