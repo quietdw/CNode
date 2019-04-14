@@ -5,33 +5,35 @@
       <div></div>
       <div></div>
     </div>
-    <div class="list-header">
-      <a href="#" :class="{'current-tab':true}">全部</a>
-      <a>精华</a>
-      <a>分享</a>
-      <a>问答</a>
-      <a>招聘</a>
-      <a>客户端测试</a>
-    </div>
-    <div class="list-container">
-      <ul>
-        <li v-for="list in lists" :key="list.id">
-          <img :src="list.author.avatar_url" :alt="list.author.loginname">
-          <span class="replay-count">
-            <span>{{list.reply_count}}</span>
-            /
-            <span>{{list.visit_count}}</span>
-          </span>
-          <span
-            class="tag"
-            :class="{'top':list.top,'good':list.good}"
-          >{{friendlyTag(list.tab)|newTag(list)}}</span>
-          <span class="title">
-            <a href>{{list.title}}</a>
-          </span>
-          <span class="last-replay">{{friendlyDate(list.last_reply_at)}}</span>
-        </li>
-      </ul>
+    <div class="lists" v-else>
+      <div class="list-header">
+        <a href="#" :class="{'current-tab':true}">全部</a>
+        <a>精华</a>
+        <a>分享</a>
+        <a>问答</a>
+        <a>招聘</a>
+        <a>客户端测试</a>
+      </div>
+      <div class="list-container">
+        <ul>
+          <li v-for="list in lists" :key="list.id">
+            <img :src="list.author.avatar_url" :alt="list.author.loginname">
+            <span class="replay-count">
+              <span>{{list.reply_count}}</span>
+              /
+              <span>{{list.visit_count}}</span>
+            </span>
+            <span
+              class="tag"
+              :class="{'top':list.top,'good':list.good}"
+            >{{friendlyTag(list.tab)|newTag(list)}}</span>
+            <span class="title">
+              <router-link :to="{name:'article',params:{id:list.id}}">{{list.title}}</router-link>
+            </span>
+            <span class="last-replay">{{friendlyDate(list.last_reply_at)}}</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -43,17 +45,6 @@ export default {
       isLoading: true,
       lists: []
     };
-  },
-  filters: {
-    newTag(value, data) {
-      if (data.top) {
-        return "置顶";
-      } else if (data.good) {
-        return "精华";
-      }
-
-      return value;
-    }
   },
   beforeMount() {
     this.request("/topics", "get", { limit: 20 }).then(response => {
@@ -70,10 +61,11 @@ export default {
   width: 90%;
   margin: 0 auto;
   .loading {
-    display: inline-block;
+    display: block;
     position: relative;
     width: 64px;
     height: 64px;
+    margin: 0 auto;
     > div {
       display: inline-block;
       position: absolute;
@@ -106,81 +98,83 @@ export default {
       }
     }
   }
-  .list-header {
-    padding: 10px;
-    background-color: #f6f6f6;
-    border-radius: 3px 3px 0 0;
-    > a {
-      margin: 0 10px;
-      color: #80bd01;
-      &.current-tab {
-        background-color: #80bd01;
-        color: #fff;
-        padding: 3px 4px;
-        border-radius: 3px;
+  .lists {
+    .list-header {
+      padding: 10px;
+      background-color: #f6f6f6;
+      border-radius: 3px 3px 0 0;
+      > a {
+        margin: 0 10px;
+        color: #80bd01;
+        &.current-tab {
+          background-color: #80bd01;
+          color: #fff;
+          padding: 3px 4px;
+          border-radius: 3px;
+        }
       }
     }
-  }
-  .list-container {
-    ul {
-      > li {
-        padding: 10px;
-        background: #fff;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        &:hover {
-          background: #f5f5f5;
-        }
-        &:not(:first-child) {
-          border-top: 1px solid #f0f0f0;
-        }
-        > img {
-          width: 30px;
-          height: 30px;
-          border-radius: 3px;
-        }
-        > .replay-count {
-          width: 70px;
-          color: #9e78c0;
+    .list-container {
+      ul {
+        > li {
+          padding: 10px;
+          background: #fff;
+          font-size: 14px;
           display: flex;
-          flex-wrap: wrap;
           align-items: center;
-          justify-content: center;
-          > span:last-child {
-            font-size: 10px;
-            color: #b4b4b4;
+          &:hover {
+            background: #f5f5f5;
           }
-        }
-        > .tag {
-          background-color: #e5e5e5;
-          color: #999;
-          padding: 2px 4px;
-          border-radius: 3px;
-          font-size: 12px;
-          &.top,
-          &.good {
-            background: #80bd01;
-            color: #fff;
+          &:not(:first-child) {
+            border-top: 1px solid #f0f0f0;
           }
-        }
-        > .title {
-          min-width: 0;
-          flex: 1;
-          overflow: hidden;
-          margin-left: 5px;
-          > a {
-            max-width: 70%;
-            white-space: nowrap;
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 16px;
-            line-height: 30px;
+          > img {
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+          }
+          > .replay-count {
+            width: 70px;
+            color: #9e78c0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            > span:last-child {
+              font-size: 10px;
+              color: #b4b4b4;
+            }
+          }
+          > .tag {
+            background-color: #e5e5e5;
+            color: #999;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 12px;
+            &.top,
+            &.good {
+              background: #80bd01;
+              color: #fff;
+            }
+          }
+          > .title {
+            min-width: 0;
+            flex: 1;
             overflow: hidden;
-            text-overflow: ellipsis;
+            margin-left: 5px;
+            > a {
+              max-width: 70%;
+              white-space: nowrap;
+              display: inline-block;
+              vertical-align: middle;
+              font-size: 16px;
+              line-height: 30px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
           }
-        }
-        > .last-replay {
+          > .last-replay {
+          }
         }
       }
     }
