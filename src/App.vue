@@ -1,19 +1,17 @@
 <template>
   <div id="app">
     <Header></Header>
-    <PostList></PostList>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
-import PostList from "./components/PostList";
 
 export default {
   name: "App",
   components: {
-    Header,
-    PostList
+    Header
   }
 };
 </script>
@@ -50,4 +48,5 @@ a {
   fill: currentColor;
   overflow: hidden;
 }
+@import "./assets/markdown.css";
 </style>
