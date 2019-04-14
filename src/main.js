@@ -7,8 +7,17 @@ import request from "@/helpers/request.js";
 import utils from "@/helpers/utils.js"
 
 Vue.config.productionTip = false
-
 Vue.prototype.request = request
+
+Vue.filter('newTag', (value, data) => {
+  if (data.top) {
+    return "置顶";
+  } else if (data.good) {
+    return "精华";
+  }
+  return value;
+})
+
 Vue.use(utils)
 /* eslint-disable no-new */
 new Vue({
