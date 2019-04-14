@@ -1,17 +1,29 @@
 <template>
   <div id="app">
     <Header></Header>
-    <router-view></router-view>
+    <div class="main">
+      <el-container>
+        <el-main>
+          <router-view name="main"></router-view>
+        </el-main>
+        <el-aside width="290px">
+          <router-view name="slidebar"></router-view>
+        </el-aside>
+      </el-container>
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default {
   name: "App",
   components: {
-    Header
+    Header,
+    Footer
   }
 };
 </script>
@@ -48,5 +60,13 @@ a {
   fill: currentColor;
   overflow: hidden;
 }
+.el-container {
+  padding: 15px 5%;
+  .el-main {
+    padding: 0;
+    padding-right: 15px;
+  }
+}
+
 @import "./assets/markdown.css";
 </style>
