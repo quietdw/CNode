@@ -23,7 +23,7 @@
       </div>
       <div class="comments">
         <div class="header">
-          <span>{{replies.length+1}}</span>回复
+          <span>{{replies.length}}</span>回复
         </div>
         <div class="comment" v-for="(reply,index) in replies" :key="reply.id">
           <div class="avatar">
