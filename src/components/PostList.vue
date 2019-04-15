@@ -28,7 +28,9 @@
               :class="{'top':list.top,'good':list.good}"
             >{{friendlyTag(list.tab)|newTag(list)}}</span>
             <span class="title">
-              <router-link :to="{name:'topic',params:{id:list.id}}">{{list.title}}</router-link>
+              <router-link
+                :to="{name:'topic',params:{id:list.id,loginname:list.author.loginname}}"
+              >{{list.title}}</router-link>
             </span>
             <span class="last-replay">{{friendlyDate(list.last_reply_at)}}</span>
           </li>
