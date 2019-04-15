@@ -1,18 +1,58 @@
 <template>
   <div class="pagenation">
-    <ul>
-      <li>«</li>
-      <li v-for="(page,index) in pages" :key="index">{{page}}</li>
-      <li>»</li>
+    <ul onselectstart="return false;">
+      <li @click="onClick" button-data="previous">«</li>
+      <li v-if="this.pages[0]>1">…</li>
+      <li
+        :class="[{'selected':page===currentpage},{'dot':typeof page ==='string'}]"
+        v-for="(page,index) in pages"
+        :key="index"
+        @click="onClick(page)"
+        ref="pageItem"
+      >{{page}}</li>
+      <li @click="onClick" button-data="next">»</li>
     </ul>
   </div>
 </template>
 <script>
 export default {
+  name: "Pagenation",
   data() {
     return {
-      pages: ["1", "2", "3", "4", "5", "···"]
+      pages: [1, 2, 3, 4, 5, "…"],
+      currentpage: 1
     };
+  },
+  methods: {
+    onClick(page) {
+      if (typeof page === "object") {
+        let buttonValue = page.target.getAttribute("button-data");
+
+        switch (buttonValue) {
+          case "previous":
+            this.$refs.pageItem[0].click();
+            break;
+          case "next":
+            this.$refs.pageItem[4].click();
+            break;
+          default:
+            break;
+        }
+      }
+
+      if (typeof page === "number") {
+        this.currentpage = page;
+
+        if (this.pages.indexOf(page) === 4) {
+          this.pages.shift();
+          this.pages.splice(4, 0, page + 1);
+        }
+        if (this.pages.indexOf(page) === 0 && page > 1) {
+          this.pages.unshift(page - 1);
+          this.pages.splice(5, 1);
+        }
+      }
+    }
   }
 };
 </script>
@@ -32,11 +72,23 @@ export default {
         border-bottom-right-radius: 4px;
         border-right-width: 1px;
       }
+      &:hover {
+        color: #999;
+        background-color: #f5f5f5;
+      }
+      &.selected {
+        color: #80bd01;
+      }
+      &.dot {
+        cursor: default;
+      }
+      color: #778087;
       padding: 6px 12px;
       background-color: #fff;
       border: 1px solid #ddd;
       border-right-width: 0;
       font-size: 14px;
+      cursor: pointer;
     }
   }
 }
