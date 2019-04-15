@@ -8,13 +8,13 @@
         v-for="(page,index) in pages"
         :key="index"
         @click="onClick(page)"
-        ref="pageItem"
       >{{page}}</li>
       <li @click="onClick" button-data="next">»</li>
     </ul>
   </div>
 </template>
 <script>
+import $ from "jquery";
 export default {
   name: "Pagenation",
   data() {
@@ -27,31 +27,31 @@ export default {
     onClick(page) {
       if (typeof page === "object") {
         let buttonValue = page.target.getAttribute("button-data");
-
+        let currentDom = $(".pagenation .selected");
         switch (buttonValue) {
           case "previous":
-            this.$refs.pageItem[0].click();
+            currentDom.prev().click();
             break;
           case "next":
-            this.$refs.pageItem[4].click();
+            currentDom.next().click();
             break;
           default:
-            break;
+            return;
         }
-      }
-
-      if (typeof page === "number") {
+      } else if (typeof page === "number") {
         this.currentpage = page;
-
         if (this.pages.indexOf(page) === 4) {
           this.pages.shift();
           this.pages.splice(4, 0, page + 1);
         }
         if (this.pages.indexOf(page) === 0 && page > 1) {
           this.pages.unshift(page - 1);
-          this.pages.splice(5, 1);
+          this.pages.splice(4, 1);
         }
+      } else {
+        return;
       }
+      this.$emit("current-change", this.currentpage);
     }
   }
 };

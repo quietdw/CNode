@@ -36,7 +36,7 @@
           </li>
         </ul>
       </div>
-      <pagenation></pagenation>
+      <pagenation @current-change="onCurrentChange"></pagenation>
     </div>
   </div>
 </template>
@@ -47,20 +47,30 @@ export default {
   data() {
     return {
       isLoading: true,
-      lists: []
+      lists: [],
+      page: 1
     };
+  },
+  methods: {
+    onCurrentChange(currentPage) {
+      this.page = currentPage;
+      this.getData();
+    },
+    getData() {
+      this.request("/topics", "get", { limit: 20, page: this.page }).then(
+        response => {
+          this.lists = response;
+          this.isLoading = false;
+        }
+      );
+    }
   },
   components: {
     pagenation
   },
   beforeMount() {
-    this.request("/topics", "get", { limit: 20 }).then(response => {
-      this.lists = response;
-      this.isLoading = false;
-      console.log(this.lists);
-    });
-  },
-  mounted() {}
+    this.getData();
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -181,8 +191,6 @@ export default {
               overflow: hidden;
               text-overflow: ellipsis;
             }
-          }
-          > .last-replay {
           }
         }
       }
