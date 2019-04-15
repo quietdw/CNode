@@ -57,6 +57,15 @@ export default {
   },
   created() {
     this.currentpage = this.current;
+    if (this.currentpage > 5) {
+      this.pages = [
+        this.currentpage - 3,
+        this.currentpage - 2,
+        this.currentpage - 1,
+        this.currentpage,
+        this.currentpage + 1
+      ];
+    }
   }
 };
 </script>
