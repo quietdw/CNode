@@ -36,7 +36,7 @@
           </li>
         </ul>
       </div>
-      <pagenation @current-change="onCurrentChange"></pagenation>
+      <pagenation :current="page" @current-change="onCurrentChange"></pagenation>
     </div>
   </div>
 </template>
@@ -61,6 +61,12 @@ export default {
         response => {
           this.lists = response;
           this.isLoading = false;
+          this.$router.push({
+            path: "/",
+            query: {
+              page: this.page
+            }
+          });
         }
       );
     }
@@ -69,6 +75,9 @@ export default {
     pagenation
   },
   beforeMount() {
+    this.page = parseInt(this.$route.query.page, 10) || "";
+    console.log(this.page);
+
     this.getData();
   }
 };

@@ -23,6 +23,7 @@ export default {
       currentpage: 1
     };
   },
+  props: ["current"],
   methods: {
     onClick(page) {
       if (typeof page === "object") {
@@ -53,6 +54,9 @@ export default {
       }
       this.$emit("current-change", this.currentpage);
     }
+  },
+  created() {
+    this.currentpage = this.current;
   }
 };
 </script>
