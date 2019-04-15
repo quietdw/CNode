@@ -8,10 +8,10 @@ import UserInfo from "../components/UserInfo";
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [{
       name: 'topic',
-      path: '/topic/:id',
+      path: '/topic/:id&:loginname',
       components: {
         main: Article,
         slidebar: Slidebar
@@ -34,3 +34,5 @@ export default new Router({
     }
   ]
 })
+
+export default router
