@@ -36,10 +36,12 @@
           </li>
         </ul>
       </div>
+      <pagenation></pagenation>
     </div>
   </div>
 </template>
 <script>
+import pagenation from "./Pagenation";
 export default {
   name: "PostList",
   data() {
@@ -47,6 +49,9 @@ export default {
       isLoading: true,
       lists: []
     };
+  },
+  components: {
+    pagenation
   },
   beforeMount() {
     this.request("/topics", "get", { limit: 20 }).then(response => {
