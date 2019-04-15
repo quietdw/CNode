@@ -55,17 +55,29 @@ export default {
       replies: []
     };
   },
+  methods: {
+    getData(params) {
+      this.request(`/topic/${params}`, "GET")
+        .then(response => {
+          this.post = response;
+          this.replies = response.replies;
+
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    // react to route changes...
+    // don't forget to call next()
+    this.isLoading = true;
+    this.getData(to.params.id);
+    next();
+  },
   beforeMount() {
-    this.request(`/topic/${this.$route.params.id}`, "GET")
-      .then(response => {
-        this.post = response;
-        this.replies = response.replies;
-        console.log(this.post);
-        this.isLoading = false;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.getData(this.$route.params.id);
   }
 };
 </script>
