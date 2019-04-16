@@ -38,7 +38,7 @@
               </span>
               <a>{{index+1}}楼·{{friendlyDate(reply.create_at)}}</a>
             </div>
-            <div v-html="reply.content" class="comment-content"></div>
+            <div v-html="newUrl(reply.content)" class="comment-content"></div>
           </div>
         </div>
       </div>
@@ -67,6 +67,9 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    newUrl(str) {
+      return str.replace(/\"\/user\//, '"#/user/');
     }
   },
   beforeRouteUpdate(to, from, next) {
