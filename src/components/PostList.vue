@@ -75,7 +75,7 @@ export default {
     pagenation
   },
   beforeMount() {
-    this.page = parseInt(this.$route.query.page, 10) || "";
+    this.page = parseInt(this.$route.query.page, 10) || 1;
     console.log(this.page);
 
     this.getData();
