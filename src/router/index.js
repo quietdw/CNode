@@ -5,6 +5,7 @@ import PostList from "../components/PostList";
 import Article from "../components/Article";
 import Slidebar from "../components/Slidebar";
 import UserInfo from "../components/UserInfo";
+import IndexSidebar from "../components/IndexSidebar";
 
 Vue.use(Router)
 
@@ -21,7 +22,8 @@ const router = new Router({
       name: 'index',
       path: '/',
       components: {
-        main: PostList
+        main: PostList,
+        slidebar: IndexSidebar
       }
     },
     {
